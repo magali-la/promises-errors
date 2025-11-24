@@ -35,4 +35,19 @@ export const fetchProductReviews = (productID: number): Promise<{productID: numb
             }
         }, 1500);
     });
-}
+};
+
+// SALES REPORT FETCH
+export const fetchSalesReport = (): Promise<{ totalSales: number, unitsSold: number, averagePrice: number }> => {
+
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (Math.random() < 0.8){
+            // resolve by returning a sales report object
+                resolve({totalSales: 100, unitsSold: 60, averagePrice: 50});
+            } else {
+                reject("Failed to fetch sales report.");
+            }
+        }, 1000);
+    });
+};
