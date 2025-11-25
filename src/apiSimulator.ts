@@ -25,10 +25,20 @@ export const fetchProductReviews = (productID: number): Promise<{productID: numb
         setTimeout(() => {
             if (Math.random() < 0.8) {
             // resolve by returning the array of objects with product reviews
-                resolve([
-                    {productID: 2, name: "Lavender Vanilla Oil (20ml)", reviewComment: "The scent is perfect for bedtime candles! Can't wait to make more candles with this!", reviewScore: 5}, 
-                    {productID: 2, name: "Lavender Vanilla Oil (20ml)", reviewComment: "I could barely smell the vanilla scent, so I was disappointed.", reviewScore: 3}
-                ]);
+                if (productID === 1){
+                    resolve([
+                        {productID: 1, name: "Amber Glass Candle Jars (4 pack)", reviewComment: " I was not happy with the product, it came with a scratch on two of the jars...", reviewScore: 2}, 
+                        {productID: 1, name: "Amber Glass Candle Jars (4 pack)", reviewComment: "I always buy my candle jars from here. The soft amber color is great for fall candle themes and fits with any decor", reviewScore: 5}
+                    ]);
+                } else if (productID === 2){
+                    resolve([
+                        {productID: 2, name: "Lavender Vanilla Oil (20ml)", reviewComment: "The scent is perfect for bedtime candles! Can't wait to make more candles with this!", reviewScore: 5}, 
+                        {productID: 2, name: "Lavender Vanilla Oil (20ml)", reviewComment: "I could barely smell the vanilla scent, so I was disappointed.", reviewScore: 3}
+                    ]);
+                } else {
+                    // throw an error - there aren't any reviews
+                    reject(`No reviews available for product ID ${productID}`);
+                }
             } else {
                 // reject by returning a failed string for the productID
                 reject(`Failed to fetch reviews for product ID ${productID}`);
