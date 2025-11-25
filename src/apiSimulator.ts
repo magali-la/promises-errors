@@ -1,5 +1,21 @@
-// PRODUCT CATALOG FETCH
+// CUSTOM ERROR TYPES
+// Data Error
+class DataError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "DataError";
+  }
+}
 
+// Network Error
+class NetworkError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "NetworkError";
+  }
+}
+
+// PRODUCT CATALOG FETCH
 export const fetchProductCatalog = (): Promise<{ id: number; name: string; price: number }[]> => {
 
     return new Promise((resolve, reject) => {
@@ -11,7 +27,7 @@ export const fetchProductCatalog = (): Promise<{ id: number; name: string; price
                     { id: 2, name: "Lavender Vanilla Oil (20ml)", price: 30 },
                 ]);
             } else {
-                reject("Failed to fetch product catalog");
+                reject(new DataError("Failed to fetch product catalog"));
             }
         }, 1000);
     });
@@ -37,11 +53,11 @@ export const fetchProductReviews = (productID: number): Promise<{productID: numb
                     ]);
                 } else {
                     // throw an error - there aren't any reviews
-                    reject(`No reviews available for product ID ${productID}`);
+                    reject(new DataError(`No reviews available for product ID ${productID}`));
                 }
             } else {
                 // reject by returning a failed string for the productID
-                reject(`Failed to fetch reviews for product ID ${productID}`);
+                reject(new DataError(`Failed to fetch reviews for product ID ${productID}`));
             }
         }, 1500);
     });
@@ -56,7 +72,7 @@ export const fetchSalesReport = (): Promise<{ totalSales: number, unitsSold: num
             // resolve by returning a sales report object
                 resolve({totalSales: 100, unitsSold: 60, averagePrice: 50});
             } else {
-                reject("Failed to fetch sales report.");
+                reject(new NetworkError("Failed to fetch sales report."));
             }
         }, 1000);
     });
